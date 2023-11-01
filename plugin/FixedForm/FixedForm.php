@@ -27,7 +27,7 @@ class FixedForm extends \Gsnowhawk\Plugin
     public function __construct()
     {
         $params = func_get_args();
-        call_user_func_array('parent::__construct', $params);
+        call_user_func_array(parent::class.'::__construct', $params);
 
         if (!empty($this->session->param('current_site'))) {
             $this->cms = new Section($this->app);

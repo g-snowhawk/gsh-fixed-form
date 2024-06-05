@@ -73,7 +73,7 @@ class FixedForm extends \Gsnowhawk\Plugin
             if ($modified) {
                 if ($result !== 0) {
                     // After save the data
-                    $mode = 'cms.template.receive:rebuild-style-sheets';
+                    $mode = '\\cms.template.receive:rebuild-style-sheets';
                     $result = true;
                     if (!empty($mode)) {
                         list($instance, $function, $arguments) = $this->app->instance($mode);

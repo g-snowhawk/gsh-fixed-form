@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Tak-Me System.
  *
@@ -18,9 +19,9 @@ namespace plugin\FixedForm\Lang;
  */
 class Ja extends \Gsnowhawk\Common\Lang
 {
-    public const APP_DETAIL    = 'CMSに定型文を追加します。';
+    public const APP_DETAIL = 'CMSに定型文を追加します。';
     public const SUCCESS_SETUP = '機能追加に成功しました。';
-    public const FAILED_SETUP  = '機能追加に失敗しました。';
+    public const FAILED_SETUP = '機能追加に失敗しました。';
 
     public const CONFIRM_SAVE_DATA = 'データを保存します。よろしいですか？';
     public const CONFIRM_DELETE_DATA = "データを削除します。取消はできません\nよろしいですか？";

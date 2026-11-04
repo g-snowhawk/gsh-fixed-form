@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Tak-Me CMS system.
  *
@@ -59,11 +60,13 @@ class FixedForm extends \Gsnowhawk\Plugin
 
         $this->db->begin();
 
+        $syslog_format = "Save the fixed form `%d'";
         if (empty($post['id'])) {
             $raw = ['create_date' => 'CURRENT_TIMESTAMP'];
             if (false !== $result = $this->db->insert($table_name, $save, $raw)) {
                 $post['id'] = $this->db->lastInsertId(null, 'id');
             }
+            $syslog_format = "Save new fixed form `%d'";
         } else {
             $result = $this->db->update($table_name, $save, 'id = ?', [$post['id']]);
         }
@@ -82,7 +85,11 @@ class FixedForm extends \Gsnowhawk\Plugin
                     }
 
                     if ($result !== false) {
-                        return $this->db->commit();
+                        if ($this->db->commit()) {
+                            $this->app->syslog($syslog_format, [$post['id']], 101);
+
+                            return true;
+                        }
                     }
                 } else {
                     $this->app->err['vl_nochange'] = 1;
@@ -100,9 +107,11 @@ class FixedForm extends \Gsnowhawk\Plugin
 
         $this->db->begin();
         if (false !== $this->db->delete('fixed_form', 'id = ?', [$id])) {
-            $this->app->logger->log("Remove the fixed form `{$id}'", 101);
+            if ($this->db->commit()) {
+                $this->app->syslog("Remove the fixed form `%d'", [$id], 101);
 
-            return $this->db->commit();
+                return true;
+            }
         }
         trigger_error($this->db->error());
         $this->db->rollback();
